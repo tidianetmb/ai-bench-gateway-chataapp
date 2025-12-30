@@ -11,7 +11,6 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
       {...props}
       enableSystem
       disableTransitionOnChange
-      storageKey={null}
     >
       {children}
     </NextThemesProvider>
