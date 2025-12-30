@@ -1,18 +1,19 @@
 import { useState, useEffect, useCallback } from "react";
 import type { DisplayModel } from "@/lib/display-model";
-import type { GatewayLanguageModelEntry } from "@ai-sdk/gateway";
-import { SUPPORTED_MODELS } from "@/lib/constants";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MILLIS = 5000;
 
-function buildModelList(models: GatewayLanguageModelEntry[]): DisplayModel[] {
-  return models
-    .filter((model) => SUPPORTED_MODELS.includes(model.id))
-    .map((model) => ({
-      id: model.id,
-      label: model.name,
-    }));
+type OpenRouterModel = {
+  id: string;
+  name: string;
+};
+
+function buildModelList(models: OpenRouterModel[]): DisplayModel[] {
+  return models.map((model) => ({
+    id: model.id,
+    label: model.name,
+  }));
 }
 
 export function useAvailableModels() {

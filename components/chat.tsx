@@ -6,7 +6,7 @@ import { ModelSelector } from "@/components/model-selector";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { SendIcon, PlusIcon } from "lucide-react";
+import { SendIcon, PlusIcon, Paperclip } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { DEFAULT_MODEL } from "@/lib/constants";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -38,6 +38,7 @@ export function Chat({ modelId = DEFAULT_MODEL }: { modelId: string }) {
   const [input, setInput] = useState("");
   const [currentModelId, setCurrentModelId] = useState(modelId);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleModelIdChange = (newModelId: string) => {
     setCurrentModelId(newModelId);
@@ -59,6 +60,22 @@ export function Chat({ modelId = DEFAULT_MODEL }: { modelId: string }) {
     stop();
     setMessages([]);
     setInput("");
+  };
+
+  const handleFileUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // TODO: Handle file upload logic here
+      console.log("File selected:", file.name);
+    }
+    // Reset input so same file can be selected again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -113,6 +130,22 @@ export function Chat({ modelId = DEFAULT_MODEL }: { modelId: string }) {
                         }
                       }}
                     />
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      className="hidden"
+                      accept="*/*"
+                    />
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      onClick={handleFileUpload}
+                      className="h-9 w-9 rounded-xl hover:bg-muted/50"
+                    >
+                      <Paperclip className="h-4 w-4" />
+                    </Button>
                     <Button
                       type="submit"
                       size="icon"
@@ -217,6 +250,22 @@ export function Chat({ modelId = DEFAULT_MODEL }: { modelId: string }) {
                     }
                   }}
                 />
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  className="hidden"
+                  accept="*/*"
+                />
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  onClick={handleFileUpload}
+                  className="h-9 w-9 rounded-xl hover:bg-accent hover:text-accent-foreground hover:scale-110 transition-all duration-150 ease"
+                >
+                  <Paperclip className="h-4 w-4" />
+                </Button>
                 <Button
                   type="submit"
                   size="icon"
@@ -234,24 +283,21 @@ export function Chat({ modelId = DEFAULT_MODEL }: { modelId: string }) {
 
       <footer className="pb-8 text-center animate-fade-in" style={{ animationDelay: '200ms' }}>
         <p className="text-xs md:text-sm text-muted-foreground">
-          The models in the list are a small subset of those available in the
-          Vercel AI Gateway.
-          <br />
-          See the{" "}
+          Models are fetched live from{" "}
           <Button
             variant="link"
             asChild
             className="p-0 h-auto text-xs md:text-sm font-normal"
           >
             <a
-              href="https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%2Fmodel-list&title="
+              href="https://openrouter.ai/models"
               target="_blank"
               rel="noopener noreferrer"
             >
-              model library
+              OpenRouter
             </a>
-          </Button>{" "}
-          for the full set.
+          </Button>
+          .
         </p>
       </footer>
     </div>

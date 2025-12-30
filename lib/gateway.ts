@@ -1,5 +1,7 @@
-import { createGatewayProvider } from "@ai-sdk/gateway";
+import { createOpenAI } from "@ai-sdk/openai";
 
-export const gateway = createGatewayProvider({
-  baseURL: process.env.AI_GATEWAY_BASE_URL,
+// OpenRouter is OpenAI-compatible, so we can use the OpenAI provider
+export const gateway = createOpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1",
 });
