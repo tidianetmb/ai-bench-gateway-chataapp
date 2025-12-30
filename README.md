@@ -1,29 +1,41 @@
-A simple [Next.js](https://nextjs.org) chatbot app to demonstrate the use of the Vercel AI Gateway with the [AI SDK](https://sdk.vercel.ai).
+A simple [Next.js](https://nextjs.org) chatbot app that uses [OpenRouter](https://openrouter.ai) to access multiple AI models including Gemini, OpenAI, DeepSeek, and Flux.
 
 ## Getting Started
 
-### One-time setup
+### Local Development
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel-labs%2Fai-sdk-gateway-demo)
+1. Clone this repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env.local` file in the root directory with your OpenRouter API key:
+   ```
+   OPENROUTER_API_KEY=your-api-key-here
+   ```
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+5. Open [http://localhost:3000](http://localhost:3000) to try the chatbot
 
-1. Clone this repository with the Deploy button above
-1. Install the [Vercel CLI](https://vercel.com/docs/cli) if you don't already have it
-1. Clone the repository you created above: `git clone <repo-url>`
-1. Link it to a Vercel project: `vc link` or `vc deploy`
+### Deployment to Vercel
 
-### Usage
-1. Install packages with `pnpm i` (or `npm i` or `yarn i`) and run the development server with `vc dev`
-1. Open http://localhost:3000 to try the chatbot
+1. Push your code to GitHub/GitLab/Bitbucket
+2. Import your repository on [Vercel](https://vercel.com)
+3. Add the following environment variable in your Vercel project settings:
+   - `OPENROUTER_API_KEY`: Your OpenRouter API key
+4. Deploy!
 
-### FAQ
+The app will automatically:
+- Fetch available models from OpenRouter
+- Filter to show only Gemini (Google), OpenAI, DeepSeek, and Flux models
+- Group models by family with badges
+- Support streaming responses
 
-1. If you prefer running your local development server directly rather than using `vc dev`, you'll need to run `vc env pull` to fetch the project's OIDC authentication token locally
-   1. the token expires every 12h, so you'll need to re-run this command periodically.
-   1. if you use `vc dev` it will auto-refresh the token for you, so you don't need to fetch it manually
-1. If you're linking to an existing, older project, you may need to enable the OIDC token feature in your project settings.
-   1. visit the project settings page (rightmost tab in your project's dashboard)
-   1. search for 'OIDC' in settings
-   1. toggle the button under "Secure Backend Access with OIDC Federation" to Enabled and click the "Save" button
+### Environment Variables
+
+- `OPENROUTER_API_KEY` (required): Your OpenRouter API key from [openrouter.ai](https://openrouter.ai)
 
 ## Authors
 
