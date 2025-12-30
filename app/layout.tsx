@@ -5,6 +5,7 @@ import "./globals.css";
 
 // Mock localStorage for SSR to prevent errors
 if (typeof window === "undefined") {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (global as any).localStorage = {
     getItem: () => null,
     setItem: () => {},
